@@ -1,59 +1,19 @@
 from random import randint
-
-LETTER_POOL = {
-    'A': 9, 
-    'B': 2, 
-    'C': 2, 
-    'D': 4, 
-    'E': 12, 
-    'F': 2, 
-    'G': 3, 
-    'H': 2, 
-    'I': 9, 
-    'J': 1, 
-    'K': 1, 
-    'L': 4, 
-    'M': 2, 
-    'N': 6, 
-    'O': 8, 
-    'P': 2, 
-    'Q': 1, 
-    'R': 6, 
-    'S': 4, 
-    'T': 6, 
-    'U': 4, 
-    'V': 2, 
-    'W': 2, 
-    'X': 1, 
-    'Y': 2, 
-    'Z': 1
-}
+from adagrams.constants import LETTER_POOL, SCORE_CHART
 
 
-def generate_shuffled_letter_list():
+def draw_letters():
     all_letters = []
-    shuffled_letters = []
+    hand = []
 
     for letter in LETTER_POOL:
         qty_of_letter = LETTER_POOL[letter]
         all_letters += letter * qty_of_letter
 
-    while all_letters:
-        random_index = randint(0,len(all_letters)-1)
-        shuffled_letters.append(all_letters[random_index])
-        all_letters.pop(random_index)
-
-    return shuffled_letters
-    
-
-def draw_letters():
-    shuffled_letters = generate_shuffled_letter_list()
-    hand = []
-
     for i in range(10):
-        random_index = randint(0,len(shuffled_letters)-1)
-        hand.append(shuffled_letters[random_index])
-        shuffled_letters.pop(random_index)
+        random_index = randint(0,len(all_letters)-1)
+        hand.append(all_letters[random_index])
+        all_letters.pop(random_index)
     
     return hand
 
@@ -72,9 +32,40 @@ def uses_available_letters(word, letter_bank):
         letter_bank_dict[letter] -= 1  
 
     return True
+
     
 def score_word(word):
-    pass
+    word_uppercase = word.upper()
+    score = 0
+
+    for letter in word_uppercase:
+        if letter in SCORE_CHART:
+            score += SCORE_CHART[letter]
+        else:
+            return "Invalid Input"
+    
+    if len(word) > 6:
+        score += 8
+    
+    return score
+
 
 def get_highest_word_score(word_list):
-    pass
+    highest_word = None
+    highest_score = 0
+    
+    for i in range(len(word_list)):
+        word = word_list[i] 
+        score = score_word(word)
+        if len(word) == 10:
+            return word, score
+        elif score == highest_score:
+            if len(word) < len(highest_word):
+                highest_word = word
+        elif score > highest_score:
+            highest_score = score
+            highest_word = word
+
+        
+    return highest_word, highest_score
+    

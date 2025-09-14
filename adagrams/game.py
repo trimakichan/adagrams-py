@@ -26,11 +26,11 @@ def draw_letters():
 
 
 def uses_available_letters(word, letter_bank):
-    word_uppercase = word.upper()
+    word = word.upper()
 
     letter_bank_dict = generate_letter_bank_dict(letter_bank)
 
-    for letter in word_uppercase:
+    for letter in word:
         if letter not in letter_bank_dict or letter_bank_dict[letter] == 0:
             return False
         letter_bank_dict[letter] -= 1
@@ -39,14 +39,14 @@ def uses_available_letters(word, letter_bank):
 
     
 def score_word(word):
-    word_uppercase = word.upper()
+    word= word.upper()
     score = 0
 
-    for letter in word_uppercase:
+    for letter in word:
         if letter in SCORE_CHART:
             score += SCORE_CHART[letter]
     
-    if 6 < len(word_uppercase) < 11:
+    if 6 < len(word) < 11:
         score += 8
     
     return score
@@ -56,26 +56,20 @@ def get_highest_word_score(word_list):
     highest_score_word = ""
     highest_score = 0
     
-    for i in range(len(word_list)):
-        current_word = word_list[i] 
-        score = score_word(current_word)
+    for word in word_list:
+        score = score_word(word)
 
-        if len(current_word) == 10 and len(highest_score_word) == 10 and score > highest_score:
-                    highest_score_word = current_word
-                    highest_score = score
-        elif score == highest_score:
-            if len(highest_score_word) == 10 and len(current_word) < 10:
+        if score == highest_score:
+            if  len(word) < 10 and len(highest_score_word) == 10:
                 continue
-
-            if  len(current_word) == 10 and len(highest_score_word) < 10:
-                highest_score_word = current_word
-            elif len(current_word) < len(highest_score_word):
-                highest_score_word = current_word
+            elif len(word) == 10 and len(highest_score_word) < 10:
+                highest_score_word = word
+            elif len(word) < len(highest_score_word):
+                highest_score_word = word
                 
         elif score > highest_score:
-            highest_score = score
-            highest_score_word = current_word
+                highest_score_word = word
+                highest_score = score
 
-        
     return highest_score_word, highest_score
     

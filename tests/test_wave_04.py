@@ -90,6 +90,7 @@ def test_get_highest_word_tie_same_length_prefers_first():
     assert best_word[0] == words[0]
     assert best_word[1] == 18
 
+
 def test_get_highest_word_many_ties_pick_first_ten_letters():
     # Arrange
     words = ["JQ", "FHQ", "AAAAAAAAAA", "BBBBBB", "TTTTTTTTTT"]

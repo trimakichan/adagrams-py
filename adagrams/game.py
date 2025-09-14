@@ -39,7 +39,7 @@ def uses_available_letters(word, letter_bank):
 
     
 def score_word(word):
-    word= word.upper()
+    word = word.upper()
     score = 0
 
     for letter in word:

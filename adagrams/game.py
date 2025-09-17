@@ -21,11 +21,12 @@ def generate_letter_bank_dict(letter_bank):
 
 def draw_letters():
     """
-    Draw 10 random letters from the the letter pool.
+    Draw 10 random letters from the letter pool.
     The letters are selected randomly based on the frequency in LETTER_POOL.
 
     Returns: 
-        list[str]: A list containing 10 single-character strings, each representing a letter.
+        list[str]: A list containing 10 single-character strings, 
+        each representing a letter.
     """
     all_letters = []
     hand = []
@@ -35,7 +36,7 @@ def draw_letters():
         all_letters += [letter] * qty_of_letter
 
     for i in range(10):
-        random_index = randint(0,len(all_letters)-1)
+        random_index = randint(0, len(all_letters) - 1)
         hand.append(all_letters[random_index])
         all_letters.pop(random_index)
     
@@ -51,7 +52,7 @@ def uses_available_letters(word, letter_bank):
         letter_bank (list[str]): The available letters.
     
     Returns:
-        bool: True if the word can be made, False otherwise.
+        bool: True if the word can be made from the letter_bank, False otherwise.
     """
     word = word.upper()
 
@@ -90,7 +91,7 @@ def score_word(word):
 
 def get_highest_word_score(word_list):
     """
-    Determine the highest scoring word for a list of words.
+    Determine the highest scoring word from a list of words.
 
     In the case of a tie:
     - The shorter word wins, unless one of the words has exactly 10 letters. 
@@ -101,26 +102,26 @@ def get_highest_word_score(word_list):
         word_list (list[str]): A list of words to compare.
 
     Returns:
-        tuple[str,int]: The first element is the 
+        tuple[str, int]: The first element is the 
         highest scoring word and the second element is the highest score. 
     """
-    highest_score_word = ""
-    highest_score = 0
+    best_word = ""
+    best_score = 0
     
     for word in word_list:
         score = score_word(word)
 
-        if score == highest_score:
-            if  len(word) < 10 and len(highest_score_word) == 10:
+        if score == best_score:
+            if  len(word) < 10 and len(best_word) == 10:
                 continue
             
-            if len(word) == 10 and len(highest_score_word) < 10:
-                highest_score_word = word
-            elif len(word) < len(highest_score_word):
-                highest_score_word = word
+            if len(word) == 10 and len(best_word) < 10:
+                best_word = word
+            elif len(word) < len(best_word):
+                best_word = word
                 
-        elif score > highest_score:
-                highest_score_word = word
-                highest_score = score
+        elif score > best_score:
+                best_word = word
+                best_score = score
 
-    return highest_score_word, highest_score
+    return best_word, best_score

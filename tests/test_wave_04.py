@@ -90,6 +90,20 @@ def test_get_highest_word_tie_same_length_prefers_first():
     assert best_word[0] == words[0]
     assert best_word[1] == 18
 
+def test_get_highest_word_highest_score_same_length():
+    # Arrange
+    words = ["AAAAAAAAAA", "DDDDDDDDDD", "EEEEEEEEEE"]
+
+    # Act
+    best_word = get_highest_word_score(words)
+
+    # Assert
+    assert isinstance(best_word, tuple)
+    assert score_word(words[0]) == 18
+    assert score_word(words[1]) == 28
+    assert score_word(words[2]) == 18
+    assert best_word[0] == words[1]
+    assert best_word[1] == 28
 
 def test_get_highest_word_many_ties_pick_first_ten_letters():
     # Arrange

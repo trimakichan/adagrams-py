@@ -2,6 +2,16 @@ from random import randint
 from adagrams.constants import LETTER_POOL, SCORE_CHART
 
 def generate_letter_bank_dict(letter_bank):
+    """
+    Generate a dictionary where a letter as a key and a count as a value
+
+    Args:
+        letter_bank (list[str]): A list of letters.
+
+    Returns: 
+        dict[str, int]: A dictionary where each key is a letter and
+        each value is the number of times that letter appears in the list.
+    """
     letter_bank_dict = {}
 
     for letter in letter_bank:
@@ -10,6 +20,13 @@ def generate_letter_bank_dict(letter_bank):
     return letter_bank_dict
 
 def draw_letters():
+    """
+    Draw 10 random letters from the the letter pool.
+    The letters are selected randomly based on the frequency in LETTER_POOL.
+
+    Returns: 
+        list[str]: A list containing 10 single-character strings, each representing a letter.
+    """
     all_letters = []
     hand = []
 
@@ -26,6 +43,16 @@ def draw_letters():
 
 
 def uses_available_letters(word, letter_bank):
+    """
+    Check if a word is made from the given letter bank.
+    
+    Args:
+        word (str): The word to check.
+        letter_bank (list[str]): The available letters.
+    
+    Returns:
+        bool: True if the word can be made, False otherwise.
+    """
     word = word.upper()
 
     letter_bank_dict = generate_letter_bank_dict(letter_bank)
@@ -39,6 +66,16 @@ def uses_available_letters(word, letter_bank):
 
     
 def score_word(word):
+    """
+    Calculate the total score of a word using the SCORE_CHART.
+    If the length of a word is between 7 and 10, add an extra 8 points to the total score.
+    
+    Args:
+        word (str): The word to score.
+
+    Returns:
+        int: The total score of the word.
+    """
     word = word.upper()
     score = 0
 
@@ -51,8 +88,22 @@ def score_word(word):
     
     return score
 
-
 def get_highest_word_score(word_list):
+    """
+    Determine the highest scoring word for a list of words.
+
+    In the case of a tie:
+    - The shorter word wins, unless one of the words has exactly 10 letters. 
+    - If multiple words have the same score and the same length, 
+    the first word in the list wins.
+
+    Args:
+        word_list (list[str]): A list of words to compare.
+
+    Returns:
+        tuple[str,int]: The first element is the 
+        highest scoring word and the second element is the highest score. 
+    """
     highest_score_word = ""
     highest_score = 0
     
@@ -62,7 +113,8 @@ def get_highest_word_score(word_list):
         if score == highest_score:
             if  len(word) < 10 and len(highest_score_word) == 10:
                 continue
-            elif len(word) == 10 and len(highest_score_word) < 10:
+            
+            if len(word) == 10 and len(highest_score_word) < 10:
                 highest_score_word = word
             elif len(word) < len(highest_score_word):
                 highest_score_word = word
@@ -72,4 +124,3 @@ def get_highest_word_score(word_list):
                 highest_score = score
 
     return highest_score_word, highest_score
-    

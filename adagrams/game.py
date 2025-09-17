@@ -3,7 +3,7 @@ from adagrams.constants import LETTER_POOL, SCORE_CHART
 
 def generate_letter_bank_dict(letter_bank):
     """
-    Generate a dictionary where a letter as a key and a count as a value
+    Generate a dictionary with letters as keys and their counts as values.
 
     Args:
         letter_bank (list[str]): A list of letters.
